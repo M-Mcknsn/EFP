@@ -27,7 +27,7 @@ The web application processes input data such as historical load data and solar 
 
 ## Setup Instructions
 
-To start the services using Docker Compose, run the following command:
+To start the services using Docker Compose navigate with `cd` to the cloned project and run the following command:
 
 ```
 docker-compose up
