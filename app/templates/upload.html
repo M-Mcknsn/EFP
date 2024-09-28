@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulardaten eingeben</title>
+    <title>PV Configuration</title>
 </head>
 <body>
-    <h2>Formulardaten eingeben</h2>
+    <h2>Enter configuration</h2>
 
     <!-- Formular für Latitude, Longitude, Declination, Azimuth und Kwp -->
     <form action="/pv-config" method="post">
@@ -30,7 +30,7 @@
         <input type="text" name="kwp" id="kwp" required>
         <br><br>
 
-        <input type="submit" value="Daten absenden">
+        <input type="submit" value="Submit">
     </form>
 
     <!-- Anzeige von Nachrichten (Erfolg oder Fehler) -->
@@ -46,7 +46,7 @@
 
     <!-- Falls Daten vorhanden, zeige diese an -->
     {% if data %}
-    <h2>Eingegebene Daten:</h2>
+    <h2>Input:</h2>
     <pre>{{ data | tojson(indent=2) }}</pre>
     {% endif %}
 </body>

@@ -1,6 +1,7 @@
 services:
 
   efp:
+    image: ghcr.io/m-mcknsn/efp/efp:latest
     build:
       context: .
       dockerfile: Dockerfile
