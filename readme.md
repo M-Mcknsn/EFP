@@ -44,7 +44,7 @@ The following parameters are required, as derived from the [Forecast.Solar docum
 - `lat`: Latitude of the location, ranging from -90 (South) to 90 (North), handled with a precision of 0.0001 (~10 meters).
 - `lon`: Longitude of the location, ranging from -180 (West) to 180 (East), handled with a precision of 0.0001 (~10 meters).
 - `dec`: Plane declination, ranging from 0 (horizontal) to 90 (vertical), in relation to the Earth's surface (integer).
-`az`: Plane azimuth, ranging from -180 to 180 (with -180 and 180 representing North, -90 representing East, and 0 representing South).
+- `az`: Plane azimuth, ranging from -180 to 180 (with -180 and 180 representing North, -90 representing East, and 0 representing South).
 - `kwp`: Installed power of the PV modules, measured in kilowatts (float).
 
 Alternatively, the following cURL command can be used to set the PV configuration:
