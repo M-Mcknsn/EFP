@@ -7,34 +7,31 @@ This service combines energy load forecasts with solar generation forecasts to i
 
 
 ## Load Forecast
-To predict the energy consumption for the upcoming day, the load forecasting service from the **Foresight Next Project**, developed by the **German Research Center for Artificial Intelligence (DFKI)**, is utilized. This service analyzes historical load data to generate accurate load forecasts. Further details can be found at the following links:
+To predict the energy consumption for the upcoming day, the load forecasting service from the **Foresight Next Project**, developed by the **German Research Center for Artificial Intelligence (DFKI)**, is utilized. This service analyzes historical load data to generate load forecasts. Further details can be found here:
 - [foresight-next ai services](https://github.com/connected-intelligent-systems/foresight-next-ai-services/tree/main)
 - [load-forecasting-service](https://github.com/connected-intelligent-systems/foresight-next-ai-services/blob/main/load-forecasting/README.md)
 
 
 ## Forecast.Solar
-The **Forecast.Solar API** is employed to predict the expected solar energy generation for a given day. This API provides detailed solar energy forecasts based on geographical and technical parameters. More information can be found here:
+The **Forecast.Solar API** is employed to predict the expected solar energy generation at an hourly resolution a given day. This API provides detailed solar energy forecasts based on geographical and technical parameters. More information can be found here:
 - [Forecast.Solar Documentation](https://doc.forecast.solar/start)
 
 
 ## System Architecture
 
-IMAGE ARCHITECTURE
+![EFPArchitecture](https://github.com/user-attachments/assets/f80b8109-088c-417c-9f42-6d2db1c33870)
+
+
 
 The web application processes input data such as historical load data and solar plant configurations to obtain solar energy forecasts using the Forecast.Solar API. The application, based on Flask and running in Docker containers, combines solar and load forecasts to predict surpluses or deficits in solar production. An additional load forecast service from DFKI provides load forecasts. The results are provided as interactive diagrams and JSON data.
 
 ## Setup Instructions
 
-start:
-
-docker build -t ghcr.io/M-Mcknsn/EFP/efp:latest .
-docker push ghcr.io/M-Mcknsn/EFP/efp:latest
-
 To start the services using Docker Compose, run the following command:
 
-'''
+```
 docker-compose up
-'''
+```
 
 ### Configuring Photovoltaic (PV) Systems
 
@@ -51,9 +48,9 @@ The following parameters are required, as derived from the [Forecast.Solar docum
 - `kwp`: Installed power of the PV modules, measured in kilowatts (float).
 
 Alternatively, the following cURL command can be used to set the PV configuration:
-'''
+```
 curl localhost:5000/efp/pv-config/<lat>/<lon>/<dec>/<az>/<kwp>
-'''
+```
 
 
 ### Prediction Generation
@@ -65,13 +62,13 @@ A [sample dataset](https://github.com/connected-intelligent-systems/foresight-ne
 
 The following cURL command can be used to submit the load data and obtain predictions:
 
-'''
+```
 curl -X POST http://localhost:5000/efp/predict -F "file=@sample_data/example_request.json"
-'''
+```
 
 Alternatively, the predictions can be generated programmatically using Python:
 
-'''
+```
 import requests
 
 url = "http://localhost:5000/efp/predict"
@@ -88,16 +85,17 @@ with open('sample_data/example_request.json', 'rb') as file:
     else:
         print(f"Error: {response.status_code}")
         print(response.text)
-'''
+```
+
 Upon successful submission, the system will return a response similar to the following:
-'''
+```
 {
     "Total Predicted Energy Consumption (kWh)": 10.122631806982001,
     "Total Predicted Solar Energy Generation (kWh)": 13.775,
     "Total Savings (%)": 136.08121151357898,
     "surplus times": ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"]
 }
-'''
+```
 
 ### Displaying Diagrams
 Based on the generated predictions, a visual representation in the form of a diagram is available, providing a clearer understanding of energy usage and solar production patterns.
@@ -105,7 +103,7 @@ Based on the generated predictions, a visual representation in the form of a dia
 - **URL**: [http://localhost:5000/efp/display](http://localhost:5000/efp/display)
 
 
-IMAGE
+![DiagrammExample](https://github.com/user-attachments/assets/b3100726-ae15-442e-a81d-ee8f6ec28b1a)
 
 
 
