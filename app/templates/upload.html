@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulardaten eingeben</title>
+</head>
+<body>
+    <h2>Formulardaten eingeben</h2>
+
+    <!-- Formular für Latitude, Longitude, Declination, Azimuth und Kwp -->
+    <form action="/pv-config" method="post">
+        <label for="latitude">Latitude:</label>
+        <input type="text" name="latitude" id="latitude" required>
+        <br><br>
+
+        <label for="longitude">Longitude:</label>
+        <input type="text" name="longitude" id="longitude" required>
+        <br><br>
+
+        <label for="declination">Declination:</label>
+        <input type="text" name="declination" id="declination" required>
+        <br><br>
+
+        <label for="azimuth">Azimuth:</label>
+        <input type="text" name="azimuth" id="azimuth" required>
+        <br><br>
+
+        <label for="kwp">Kwp:</label>
+        <input type="text" name="kwp" id="kwp" required>
+        <br><br>
+
+        <input type="submit" value="Daten absenden">
+    </form>
+
+    <!-- Anzeige von Nachrichten (Erfolg oder Fehler) -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Falls Daten vorhanden, zeige diese an -->
+    {% if data %}
+    <h2>Eingegebene Daten:</h2>
+    <pre>{{ data | tojson(indent=2) }}</pre>
+    {% endif %}
+</body>
+</html>

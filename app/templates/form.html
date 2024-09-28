@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON-Datei hochladen und optional Parameter eingeben</title>
+    <script>
+        async function submitForm(event) {
+            event.preventDefault(); // Verhindert das Standardverhalten des Formulars
+
+            // Hole die Datei
+            const fileInput = document.getElementById('file');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert("Bitte laden Sie eine JSON-Datei hoch.");
+                return;
+            }
+
+            // Hole die optionalen Werte aus dem Formular, setze None falls leer und konvertiere zu den richtigen Datentypen
+            const latitude = parseFloat(document.getElementById('latitude').value) || 'None';
+            const longitude = parseFloat(document.getElementById('longitude').value) || 'None';
+            const declination = parseInt(document.getElementById('declination').value) || 'None';
+            const azimuth = parseInt(document.getElementById('azimuth').value) || 'None';
+            const kwp = parseFloat(document.getElementById('kwp').value) || 'None';
+
+            // Erstelle ein FormData-Objekt, um die Datei zu versenden
+            const formData = new FormData();
+            formData.append('file', file); // Füge die Datei hinzu
+
+            // Sende die POST-Anfrage an den Flask-Endpunkt mit den URL-Parametern
+            try {
+                const response = await fetch(`/emp/predict/${latitude}/${longitude}/${declination}/${azimuth}/${kwp}`, {
+                    method: 'POST',
+                    body: formData // Sende die Datei im Body
+                });
+
+                if (!response.ok) {
+                    throw new Error('Netzwerkantwort war nicht ok');
+                }
+
+                const result = await response.json(); // Antwort als JSON lesen
+                alert('Vorhersage erhalten: ' + JSON.stringify(result, null, 2)); // Zeige die Vorhersage an
+            } catch (error) {
+                console.error('Fehler beim Senden der Anfrage:', error);
+                alert('Fehler beim Senden der Anfrage.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>JSON-Datei hochladen und optional Parameter eingeben</h1>
+
+    <!-- Formular zum Hochladen der JSON-Datei und Eingabe optionaler Parameter -->
+    <form id="prediction-form" onsubmit="submitForm(event)" enctype="multipart/form-data">
+        <!-- JSON-Datei muss hochgeladen werden -->
+        <label for="file">Wählen Sie eine JSON-Datei (Pflicht):</label>
+        <input type="file" name="file" id="file" accept=".json" required>
+        <br><br>
+
+        <!-- Optional: Latitude -->
+        <label for="latitude">Latitude (optional, float):</label>
+        <input type="text" name="latitude" id="latitude">
+        <br><br>
+
+        <!-- Optional: Longitude -->
+        <label for="longitude">Longitude (optional, float):</label>
+        <input type="text" name="longitude" id="longitude">
+        <br><br>
+
+        <!-- Optional: Declination -->
+        <label for="declination">Declination (optional, int):</label>
+        <input type="text" name="declination" id="declination">
+        <br><br>
+
+        <!-- Optional: Azimuth -->
+        <label for="azimuth">Azimuth (optional, int):</label>
+        <input type="text" name="azimuth" id="azimuth">
+        <br><br>
+
+        <!-- Optional: Kwp -->
+        <label for="kwp">Kwp (optional, float):</label>
+        <input type="text" name="kwp" id="kwp">
+        <br><br>
+
+        <input type="submit" value="Daten absenden">
+    </form>
+</body>
+</html>

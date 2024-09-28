@@ -1,0 +1,22 @@
+services:
+
+  efp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      - ./app:/app
+    depends_on:
+      - load-forecast
+
+    ports:
+      - "5000:5000"   
+
+    command: gunicorn -b 0.0.0.0:5000 --timeout 1200 flask_server:app
+  
+  load-forecast:
+    image: ghcr.io/connected-intelligent-systems/foresight-next-ai-services/load-forecasting:latest
+
+    ports:
+      - "8000:8000"
