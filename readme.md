@@ -39,7 +39,7 @@ Solar energy predictions are generated based on the configuration of the photovo
 
 - **URL**: [http://localhost:5000/efp](http://localhost:5000/efp)
 
-The following parameters are required, as derived from the [Forecast.Solar documentation](https://doc.forecast.solar/api:estimate)):
+The following parameters are required, as derived from the [Forecast.Solar documentation](https://doc.forecast.solar/api:estimate):
 
 - `lat`: Latitude of the location, ranging from -90 (South) to 90 (North), handled with a precision of 0.0001 (~10 meters).
 - `lon`: Longitude of the location, ranging from -180 (West) to 180 (East), handled with a precision of 0.0001 (~10 meters).
