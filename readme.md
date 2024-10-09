@@ -13,7 +13,7 @@ To predict the energy consumption for the upcoming day, the load forecasting ser
 
 
 ## Forecast.Solar
-The **Forecast.Solar API** is employed to predict the expected solar energy generation at an hourly resolution a given day. This API provides detailed solar energy forecasts based on geographical and technical parameters. More information can be found here:
+The **Forecast.Solar API** is employed to predict the expected solar energy generation at an hourly resolution a given day. This API provides solar energy forecasts (Watts and Watthours per hour) based on geographical and technical parameters. More information can be found here:
 - [Forecast.Solar Documentation](https://doc.forecast.solar/start)
 
 
